@@ -3,14 +3,14 @@ bool AliceSuccess = false;
 bool BobSuccess = false;
 
 mtype:ID = {IDA, IDB, IDS};
-mtype:DATA = {A, B, KPA, KPB, KSS, NA, NB}
+mtype:DATA = {A, B, KPA, KPB, KSS, NA, NB,ANY}
 
 chan ch = [0] of {mtype:ID, mtype:ID,mtype:DATA, mtype:DATA, mtype:DATA}
 
 proctype Alice() {
     mtype:DATA kpb;
     mtype:DATA nb;
-    ch ! IDA,IDS,A,B,_;
+    ch ! IDA,IDS,A,B,ANY;
     ch ? IDS,IDA,kpb,B,KSS;
     ch ! IDA,IDB,NA,A,kpb;
     ch ? IDB,IDA,NA,nb,KPA;
@@ -24,7 +24,7 @@ proctype Bob() {
     mtype:DATA kpa;
     mtype:DATA na;
     ch ? IDA,IDB,na,A,KPB;
-    ch ! IDB,IDS,B,A,_;
+    ch ! IDB,IDS,B,A,ANY;
     ch ? IDS,IDB,kpa,A,KSS;
     ch ! IDB,IDA,na,NB,kpa;
     atomic {
@@ -34,8 +34,8 @@ proctype Bob() {
 
 proctype Server () {
     do
-    ::ch ? IDA,IDS,A,B,_ -> ch ! IDS,IDA,KPB,B,KSS;
-    ::ch ? IDB,IDS,B,A,_ -> ch ! IDS,IDB,KPA,A,KSS;
+    ::ch ? IDA,IDS,A,B,ANY -> ch ! IDS,IDA,KPB,B,KSS;
+    ::ch ? IDB,IDS,B,A,ANY -> ch ! IDS,IDB,KPA,A,KSS;
     ::(AliceSuccess && BobSuccess) -> break;
     od;
 }
