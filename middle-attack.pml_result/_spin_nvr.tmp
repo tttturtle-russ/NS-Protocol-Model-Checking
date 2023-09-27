@@ -1,0 +1,11 @@
+never terminate {    /* !([] (<> ((AliceSuccess) && (BobSuccess)))) */
+T0_init:
+	do
+	:: (! (((AliceSuccess) && (BobSuccess)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((AliceSuccess) && (BobSuccess)))) -> goto accept_S4
+	od;
+}

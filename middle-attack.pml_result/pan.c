@@ -499,32 +499,35 @@ int _;	/* predefined write-only variable */
 #endif
 
 short src_ln4 [] = {
-	  0, 148, 149, 150, 151,   0, };
+	  0,   3,   3,   4,   4,   2,   6,   2, 
+	  8,   8,   7,  10,   7,  10,   0, };
 S_F_MAP src_file4 [] = {
+	{ "-", 0, 0 },
+	{ "_spin_nvr.tmp", 1, 13 },
+	{ "-", 14, 15 }
+};
+short *src_claim;
+uchar reached4 [] = {
+	  0,   1,   1,   1,   1,   0,   1,   1, 
+	  1,   1,   0,   1,   1,   0,   0, };
+uchar *loopstate4;
+
+short src_ln3 [] = {
+	  0, 149, 150, 151, 152,   0, };
+S_F_MAP src_file3 [] = {
 	{ "-", 0, 0 },
 	{ "../middle-attack.pml", 1, 4 },
 	{ "-", 5, 6 }
 };
-uchar reached4 [] = {
-	  0,   0,   0,   0,   0,   0, };
-uchar *loopstate4;
-
-short src_ln3 [] = {
-	  0, 144, 145,   0, };
-S_F_MAP src_file3 [] = {
-	{ "-", 0, 0 },
-	{ "../middle-attack.pml", 1, 2 },
-	{ "-", 3, 4 }
-};
 uchar reached3 [] = {
-	  0,   0,   0,   0, };
+	  0,   0,   0,   0,   0,   0, };
 uchar *loopstate3;
 
 short src_ln2 [] = {
-	  0, 112, 113, 114, 115, 116, 117, 109, 
-	121, 119, 124, 125, 126, 127, 128, 129, 
-	130, 123, 133, 134, 135, 136, 137, 138, 
-	139, 132, 141,   0, };
+	  0, 115, 116, 117, 118, 119, 120, 112, 
+	124, 122, 127, 128, 129, 130, 131, 132, 
+	133, 126, 136, 137, 138, 139, 140, 141, 
+	142, 135, 144,   0, };
 S_F_MAP src_file2 [] = {
 	{ "-", 0, 0 },
 	{ "../middle-attack.pml", 1, 26 },
@@ -539,19 +542,21 @@ uchar *loopstate2;
 
 short src_ln1 [] = {
 	  0,  78,  77,  82,  83,  84,  84,  81, 
-	 86,  86,  87,  88,  89,  90,  92,  80, 
-	 95,  97,  98,  99, 100, 101, 101,  96, 
-	103,  94, 104,   0, };
+	 86,  87,  87,  88,  88,  86,  90,  90, 
+	 91,  92,  93,  94,  96,  80,  99, 101, 
+	102, 103, 104, 104, 100, 106,  98, 107, 
+	  0, };
 S_F_MAP src_file1 [] = {
 	{ "-", 0, 0 },
-	{ "../middle-attack.pml", 1, 26 },
-	{ "-", 27, 28 }
+	{ "../middle-attack.pml", 1, 31 },
+	{ "-", 32, 33 }
 };
 uchar reached1 [] = {
-	  0,   1,   0,   1,   0,   1,   0,   1, 
-	  1,   0,   0,   0,   0,   0,   0,   0, 
-	  1,   1,   0,   0,   0,   1,   0,   0, 
-	  1,   0,   0,   0, };
+	  0,   1,   0,   1,   0,   1,   1,   1, 
+	  1,   1,   0,   1,   0,   0,   1,   0, 
+	  0,   0,   0,   0,   0,   0,   1,   1, 
+	  0,   0,   1,   0,   0,   1,   0,   0, 
+	  0, };
 uchar *loopstate1;
 
 short src_ln0 [] = {
@@ -603,8 +608,8 @@ char *procname[] = {
    "Alice",
    "Bob",
    "Attack",
-   "monitor",
    ":init:",
+   "terminate",
    ":np_:",
 	0
 };
@@ -615,8 +620,8 @@ int Btypes[] = {
    4,	/* Alice */
    4,	/* Bob */
    4,	/* Attack */
-   3,	/* monitor */
    2,	/* :init: */
+   1,	/* terminate */
    0	/* :np_: */
 };
 
@@ -891,20 +896,23 @@ addproc(int calling_pid, int priority, int n)
 		reached5[0] = 1;
 		accpstate[5][1] = 1;
 		break;
-	case 4:	/* :init: */
+	case 4:	/* terminate */
 		((P4 *)pptr(h))->_t = 4;
-		((P4 *)pptr(h))->_p = 1;
+		((P4 *)pptr(h))->_p = 5;
 #ifdef HAS_PRIORITY
 		((P4 *)pptr(h))->_priority = priority; /* was: 1 */
 #endif
-		reached4[1]=1;
+		reached4[5]=1;
+		src_claim = src_ln4;
 		/* params: */
 		/* locals: */
+#ifdef VAR_RANGES
+#endif
 #ifdef HAS_CODE
 		locinit4(h);
 #endif
 		break;
-	case 3:	/* monitor */
+	case 3:	/* :init: */
 		((P3 *)pptr(h))->_t = 3;
 		((P3 *)pptr(h))->_p = 1;
 #ifdef HAS_PRIORITY
@@ -1214,6 +1222,7 @@ run(void)
 	if ((Maxbody % WS) != 0)
 		Maxbody += WS - (Maxbody % WS);
 
+	accpstate[4][10] = 1;
 	retrans(0, _nstates0, _start0, src_ln0, reached0, loopstate0);
 	retrans(1, _nstates1, _start1, src_ln1, reached1, loopstate1);
 	retrans(2, _nstates2, _start2, src_ln2, reached2, loopstate2);
@@ -12570,12 +12579,10 @@ iniglobals(int calling_pid)
 {
 		now.AliceSuccess = 0;
 		now.BobSuccess = 0;
-		now.End = 0;
 		now.ch = addqueue(calling_pid, 1, 1);
 #ifdef VAR_RANGES
 		logval("AliceSuccess", now.AliceSuccess);
 		logval("BobSuccess", now.BobSuccess);
-		logval("End", now.End);
 #endif
 }
 
@@ -13247,9 +13254,7 @@ active_procs(void)
 {
 	if (reversing == 0) {
 		Addproc(3, 1);
-		Addproc(4, 1);
 	} else {
-		Addproc(4, 1);
 		Addproc(3, 1);
 	}
 }
@@ -14364,10 +14369,10 @@ r_xpoint(void)
 void
 set_recvs(void)
 {
-	Is_Recv[77] = 1;
-	Is_Recv[69] = 1;
-	Is_Recv[60] = 1;
-	Is_Recv[49] = 1;
+	Is_Recv[82] = 1;
+	Is_Recv[74] = 1;
+	Is_Recv[65] = 1;
+	Is_Recv[55] = 1;
 	Is_Recv[34] = 1;
 	Is_Recv[16] = 1;
 }
@@ -14391,7 +14396,6 @@ c_globals(void)
 	printf("	mtype  VC:	1\n");
 	printf("	bit    AliceSuccess:	%d\n", now.AliceSuccess);
 	printf("	bit    BobSuccess:	%d\n", now.BobSuccess);
-	printf("	bit    End:	%d\n", now.End);
 	printf("	chan ch (=%d):	len %d:\t", now.ch, q_len(now.ch));
 	c_chandump(now.ch);
 }
@@ -14526,7 +14530,7 @@ c_chandump(int from)
 	printf("\n");
 }
 
-Trans *t_id_lkup[92];
+Trans *t_id_lkup[108];
 
 
 #ifdef BFS_PAR

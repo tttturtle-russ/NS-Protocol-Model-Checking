@@ -24,103 +24,125 @@ settable(void)
 
 	trans = (Trans ***) emalloc(6*sizeof(Trans **));
 
-	/* proctype 4: :init: */
+	/* proctype 4: terminate */
 
-	trans[4] = (Trans **) emalloc(5*sizeof(Trans *));
+	trans[4] = (Trans **) emalloc(14*sizeof(Trans *));
 
-	trans[4][1]	= settr(88,0,2,3,3,"(run Alice())", 0, 2, 0);
-	trans[4][2]	= settr(89,0,3,4,4,"(run Bob())", 0, 2, 0);
-	trans[4][3]	= settr(90,0,4,5,5,"(run Attack())", 0, 2, 0);
-	trans[4][4]	= settr(91,0,0,6,6,"-end-", 0, 3500, 0);
+	trans[4][6]	= settr(100,0,5,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][5] = settr(99,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(99,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(99,0,3,0,0,"DO", 0, 2, 0);
+	trans[4][1]	= settr(95,0,10,3,0,"(!((AliceSuccess&&BobSuccess)))", 1, 2, 0);
+	trans[4][2]	= settr(96,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[4][3]	= settr(97,0,5,1,0,"(1)", 0, 2, 0);
+	trans[4][4]	= settr(98,0,5,1,0,"goto T0_init", 0, 2, 0);
+	trans[4][7]	= settr(101,0,10,1,0,"break", 0, 2, 0);
+	trans[4][11]	= settr(105,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][10] = settr(104,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(104,0,8,0,0,"DO", 0, 2, 0);
+	trans[4][8]	= settr(102,0,10,4,0,"(!((AliceSuccess&&BobSuccess)))", 1, 2, 0);
+	trans[4][9]	= settr(103,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[4][12]	= settr(106,0,13,1,0,"break", 0, 2, 0);
+	trans[4][13]	= settr(107,0,0,5,5,"-end-", 0, 3500, 0);
 
-	/* proctype 3: monitor */
+	/* proctype 3: :init: */
 
-	trans[3] = (Trans **) emalloc(3*sizeof(Trans *));
+	trans[3] = (Trans **) emalloc(5*sizeof(Trans *));
 
-	trans[3][1]	= settr(86,0,2,7,0,"assert(((!(End)&&!(AliceSuccess))&&!(BobSuccess)))", 1, 2, 0);
-	trans[3][2]	= settr(87,0,0,8,8,"-end-", 0, 3500, 0);
+	trans[3][1]	= settr(91,0,2,6,6,"(run Alice())", 0, 2, 0);
+	trans[3][2]	= settr(92,0,3,7,7,"(run Bob())", 0, 2, 0);
+	trans[3][3]	= settr(93,0,4,8,8,"(run Attack())", 0, 2, 0);
+	trans[3][4]	= settr(94,0,0,9,9,"-end-", 0, 3500, 0);
 
 	/* proctype 2: Attack */
 
 	trans[2] = (Trans **) emalloc(27*sizeof(Trans *));
 
-	T = trans[ 2][7] = settr(66,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(66,2,1,0,0,"ATOMIC", 1, 503, 0);
-	trans[2][1]	= settr(60,4,9,9,9,"ch?1,3,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0); /* m: 2 -> 9,0 */
+	T = trans[ 2][7] = settr(71,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(71,2,1,0,0,"ATOMIC", 1, 503, 0);
+	trans[2][1]	= settr(65,4,9,10,10,"ch?1,3,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0); /* m: 2 -> 9,0 */
 	reached2[2] = 1;
 	trans[2][2]	= settr(0,0,0,0,0,"out_msg.receiver = 2",0,0,0);
 	trans[2][3]	= settr(0,0,0,0,0,"out_msg.sender = in_msg.sender",0,0,0);
 	trans[2][4]	= settr(0,0,0,0,0,"out_msg.msg1 = in_msg.msg1",0,0,0);
 	trans[2][5]	= settr(0,0,0,0,0,"out_msg.msg2 = in_msg.msg2",0,0,0);
 	trans[2][6]	= settr(0,0,0,0,0,"out_msg.key = 2",0,0,0);
-	T = trans[ 2][9] = settr(68,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(68,2,8,0,0,"ATOMIC", 1, 3, 0);
-	trans[2][8]	= settr(67,0,17,10,10,"ch!2,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
-	T = trans[ 2][17] = settr(76,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(76,2,10,0,0,"ATOMIC", 1, 503, 3);
-	trans[2][10]	= settr(69,2,16,11,11,"ch?3,2,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 3); /* m: 11 -> 16,0 */
+	T = trans[ 2][9] = settr(73,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(73,2,8,0,0,"ATOMIC", 1, 3, 0);
+	trans[2][8]	= settr(72,0,17,11,11,"ch!2,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
+	T = trans[ 2][17] = settr(81,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(81,2,10,0,0,"ATOMIC", 1, 503, 3);
+	trans[2][10]	= settr(74,2,16,12,12,"ch?3,2,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 3); /* m: 11 -> 16,0 */
 	reached2[11] = 1;
 	trans[2][11]	= settr(0,0,0,0,0,"out_msg.sender = 1",0,0,0);
 	trans[2][12]	= settr(0,0,0,0,0,"out_msg.receiver = in_msg.receiver",0,0,0);
 	trans[2][13]	= settr(0,0,0,0,0,"out_msg.msg1 = in_msg.msg1",0,0,0);
 	trans[2][14]	= settr(0,0,0,0,0,"out_msg.msg2 = in_msg.msg2",0,0,0);
 	trans[2][15]	= settr(0,0,0,0,0,"out_msg.key = in_msg.key",0,0,0);
-	trans[2][16]	= settr(75,0,25,12,12,"ch!3,1,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 503, 3);
-	T = trans[ 2][25] = settr(84,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(84,2,18,0,0,"ATOMIC", 1, 503, 3);
-	trans[2][18]	= settr(77,2,24,13,13,"ch?1,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 3); /* m: 19 -> 24,0 */
+	trans[2][16]	= settr(80,0,25,13,13,"ch!3,1,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 503, 3);
+	T = trans[ 2][25] = settr(89,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(89,2,18,0,0,"ATOMIC", 1, 503, 3);
+	trans[2][18]	= settr(82,2,24,14,14,"ch?1,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 3); /* m: 19 -> 24,0 */
 	reached2[19] = 1;
 	trans[2][19]	= settr(0,0,0,0,0,"out_msg.sender = in_msg.sender",0,0,0);
 	trans[2][20]	= settr(0,0,0,0,0,"out_msg.receiver = 2",0,0,0);
 	trans[2][21]	= settr(0,0,0,0,0,"out_msg.msg1 = in_msg.msg1",0,0,0);
 	trans[2][22]	= settr(0,0,0,0,0,"out_msg.msg2 = in_msg.msg2",0,0,0);
 	trans[2][23]	= settr(0,0,0,0,0,"out_msg.key = 2",0,0,0);
-	trans[2][24]	= settr(83,0,26,14,14,"ch!2,verified,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 503, 3);
-	trans[2][26]	= settr(85,0,0,15,15,"-end-", 0, 3500, 0);
+	trans[2][24]	= settr(88,0,26,15,15,"ch!2,verified,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 503, 3);
+	trans[2][26]	= settr(90,0,0,16,16,"-end-", 0, 3500, 0);
 
 	/* proctype 1: Bob */
 
-	trans[1] = (Trans **) emalloc(27*sizeof(Trans *));
+	trans[1] = (Trans **) emalloc(32*sizeof(Trans *));
 
 	T = trans[ 1][2] = settr(35,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(35,2,1,0,0,"ATOMIC", 1, 503, 0);
-	trans[1][1]	= settr(34,0,15,16,16,"ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0);
-	T = trans[ 1][15] = settr(48,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(48,2,7,0,0,"ATOMIC", 1, 3, 0);
+	trans[1][1]	= settr(34,0,21,17,17,"ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0);
+	T = trans[ 1][21] = settr(54,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(54,2,7,0,0,"ATOMIC", 1, 3, 0);
 	T = trans[1][7] = settr(40,2,0,0,0,"IF", 1, 3, 0);
 	T = T->nxt	= settr(40,2,3,0,0,"IF", 1, 3, 0);
 	    T->nxt	= settr(40,2,5,0,0,"IF", 1, 3, 0);
-	trans[1][3]	= settr(36,2,14,17,17,"((in_msg.key!=2))", 1, 3, 0); /* m: 4 -> 14,0 */
+	trans[1][3]	= settr(36,2,13,18,18,"((in_msg.key!=2))", 1, 3, 0); /* m: 4 -> 13,0 */
 	reached1[4] = 1;
 	trans[1][4]	= settr(0,0,0,0,0,"printf('Wrong Public Key\\n')",0,0,0);
-	trans[1][8]	= settr(41,2,9,1,0,".(goto)", 1, 3, 0); /* m: 9 -> 0,14 */
-	reached1[9] = 1;
+	trans[1][8]	= settr(41,2,13,1,0,".(goto)", 1, 3, 0);
 	trans[1][5]	= settr(38,2,6,2,0,"else", 1, 3, 0);
-	trans[1][6]	= settr(39,2,14,18,18,"(1)", 1, 3, 0); /* m: 9 -> 14,0 */
-	reached1[9] = 1;
-	trans[1][9]	= settr(42,2,14,19,19,"out_msg.receiver = 3", 1, 3, 0); /* m: 10 -> 0,14 */
+	trans[1][6]	= settr(39,2,13,1,0,"(1)", 1, 3, 0);
+	T = trans[1][13] = settr(46,2,0,0,0,"IF", 1, 3, 0);
+	T = T->nxt	= settr(46,2,9,0,0,"IF", 1, 3, 0);
+	    T->nxt	= settr(46,2,11,0,0,"IF", 1, 3, 0);
+	trans[1][9]	= settr(42,2,20,19,19,"((in_msg.msg1==5))", 1, 3, 0); /* m: 10 -> 20,0 */
 	reached1[10] = 1;
-	trans[1][10]	= settr(0,0,0,0,0,"out_msg.sender = 2",0,0,0);
-	trans[1][11]	= settr(0,0,0,0,0,"out_msg.msg1 = in_msg.msg1",0,0,0);
-	trans[1][12]	= settr(0,0,0,0,0,"out_msg.msg2 = nb",0,0,0);
-	trans[1][13]	= settr(0,0,0,0,0,"out_msg.key = 3",0,0,0);
-	trans[1][14]	= settr(47,0,25,20,20,"ch!3,2,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
-	T = trans[ 1][25] = settr(58,2,0,0,0,"ATOMIC", 1, 2, 0);
-	T->nxt	= settr(58,2,16,0,0,"ATOMIC", 1, 503, 0);
-	trans[1][16]	= settr(49,2,23,21,21,"ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0);
-	T = trans[1][23] = settr(56,2,0,0,0,"IF", 1, 503, 0);
-	T = T->nxt	= settr(56,2,17,0,0,"IF", 1, 503, 0);
-	    T->nxt	= settr(56,2,21,0,0,"IF", 1, 503, 0);
-	trans[1][17]	= settr(50,4,26,22,22,"((in_msg.msg1==4))", 1, 503, 0); /* m: 18 -> 26,0 */
-	reached1[18] = 1;
-	trans[1][18]	= settr(0,0,0,0,0,"printf('Bob Auth Success\\n')",0,0,0);
-	trans[1][19]	= settr(0,0,0,0,0,"BobSuccess = 1",0,0,0);
-	trans[1][20]	= settr(0,0,0,0,0,"End = 1",0,0,0);
-	trans[1][24]	= settr(57,0,26,23,23,".(goto)", 1, 503, 0);
-	trans[1][21]	= settr(54,2,22,2,0,"else", 1, 503, 0);
-	trans[1][22]	= settr(55,4,26,24,24,"printf('Bob Auth Failed\\n')", 1, 503, 0); /* m: 24 -> 0,26 */
+	trans[1][10]	= settr(0,0,0,0,0,"printf('Bob receive NA\\n')",0,0,0);
+	trans[1][14]	= settr(47,2,15,1,0,".(goto)", 1, 3, 0); /* m: 15 -> 0,20 */
+	reached1[15] = 1;
+	trans[1][11]	= settr(44,2,12,2,0,"else", 1, 3, 0);
+	trans[1][12]	= settr(45,2,20,20,20,"(1)", 1, 3, 0); /* m: 15 -> 20,0 */
+	reached1[15] = 1;
+	trans[1][15]	= settr(48,2,20,21,21,"out_msg.receiver = 3", 1, 3, 0); /* m: 16 -> 0,20 */
+	reached1[16] = 1;
+	trans[1][16]	= settr(0,0,0,0,0,"out_msg.sender = 2",0,0,0);
+	trans[1][17]	= settr(0,0,0,0,0,"out_msg.msg1 = in_msg.msg1",0,0,0);
+	trans[1][18]	= settr(0,0,0,0,0,"out_msg.msg2 = nb",0,0,0);
+	trans[1][19]	= settr(0,0,0,0,0,"out_msg.key = 3",0,0,0);
+	trans[1][20]	= settr(53,0,30,22,22,"ch!3,2,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
+	T = trans[ 1][30] = settr(63,2,0,0,0,"ATOMIC", 1, 2, 0);
+	T->nxt	= settr(63,2,22,0,0,"ATOMIC", 1, 503, 0);
+	trans[1][22]	= settr(55,2,28,23,23,"ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0);
+	T = trans[1][28] = settr(61,2,0,0,0,"IF", 1, 503, 0);
+	T = T->nxt	= settr(61,2,23,0,0,"IF", 1, 503, 0);
+	    T->nxt	= settr(61,2,26,0,0,"IF", 1, 503, 0);
+	trans[1][23]	= settr(56,4,31,24,24,"((in_msg.msg1==4))", 1, 503, 0); /* m: 24 -> 31,0 */
 	reached1[24] = 1;
-	trans[1][26]	= settr(59,0,0,25,25,"-end-", 0, 3500, 0);
+	trans[1][24]	= settr(0,0,0,0,0,"printf('Bob Auth Success\\n')",0,0,0);
+	trans[1][25]	= settr(0,0,0,0,0,"BobSuccess = 1",0,0,0);
+	trans[1][29]	= settr(62,0,31,25,25,".(goto)", 1, 503, 0);
+	trans[1][26]	= settr(59,2,27,2,0,"else", 1, 503, 0);
+	trans[1][27]	= settr(60,4,31,26,26,"printf('Bob Auth Failed\\n')", 1, 503, 0); /* m: 29 -> 0,31 */
+	reached1[29] = 1;
+	trans[1][31]	= settr(64,0,0,27,27,"-end-", 0, 3500, 0);
 
 	/* proctype 0: Alice */
 
@@ -128,7 +150,7 @@ settable(void)
 
 	T = trans[ 0][16] = settr(15,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(15,2,1,0,0,"ATOMIC", 1, 3, 0);
-	trans[0][1]	= settr(0,2,12,26,26,"out_msg.sender = 3", 1, 3, 0); /* m: 2 -> 0,12 */
+	trans[0][1]	= settr(0,2,12,28,28,"out_msg.sender = 3", 1, 3, 0); /* m: 2 -> 0,12 */
 	reached0[2] = 1;
 	trans[0][2]	= settr(0,0,0,0,0,"out_msg.msg1 = na",0,0,0);
 	trans[0][3]	= settr(0,0,0,0,0,"out_msg.msg2 = 3",0,0,0);
@@ -137,44 +159,44 @@ settable(void)
 	T = trans[0][12] = settr(11,2,0,0,0,"IF", 1, 3, 0);
 	T = T->nxt	= settr(11,2,6,0,0,"IF", 1, 3, 0);
 	    T->nxt	= settr(11,2,9,0,0,"IF", 1, 3, 0);
-	trans[0][6]	= settr(5,2,15,27,27,"((out_msg.receiver==2))", 1, 3, 0); /* m: 7 -> 15,0 */
+	trans[0][6]	= settr(5,2,15,29,29,"((out_msg.receiver==2))", 1, 3, 0); /* m: 7 -> 15,0 */
 	reached0[7] = 1;
 	trans[0][7]	= settr(0,0,0,0,0,"key = 2",0,0,0);
 	trans[0][8]	= settr(0,0,0,0,0,"verified = 2",0,0,0);
 	trans[0][13]	= settr(12,2,14,1,0,".(goto)", 1, 3, 0); /* m: 14 -> 0,15 */
 	reached0[14] = 1;
-	trans[0][9]	= settr(8,2,15,28,28,"((out_msg.receiver==1))", 1, 3, 0); /* m: 10 -> 15,0 */
+	trans[0][9]	= settr(8,2,15,30,30,"((out_msg.receiver==1))", 1, 3, 0); /* m: 10 -> 15,0 */
 	reached0[10] = 1;
 	trans[0][10]	= settr(0,0,0,0,0,"key = 1",0,0,0);
 	trans[0][11]	= settr(0,0,0,0,0,"verified = 1",0,0,0);
-	trans[0][14]	= settr(13,2,15,29,29,"out_msg.key = key", 1, 3, 0);
-	trans[0][15]	= settr(14,0,18,30,30,"ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
+	trans[0][14]	= settr(13,2,15,31,31,"out_msg.key = key", 1, 3, 0);
+	trans[0][15]	= settr(14,0,18,32,32,"ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
 	T = trans[ 0][18] = settr(17,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(17,2,17,0,0,"ATOMIC", 1, 503, 0);
-	trans[0][17]	= settr(16,0,25,31,31,"ch?3,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0);
+	trans[0][17]	= settr(16,0,25,33,33,"ch?3,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key", 1, 503, 0);
 	T = trans[ 0][25] = settr(24,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(24,2,19,0,0,"ATOMIC", 1, 3, 0);
-	trans[0][19]	= settr(18,2,24,32,32,"out_msg.sender = 3", 1, 3, 0); /* m: 20 -> 0,24 */
+	trans[0][19]	= settr(18,2,24,34,34,"out_msg.sender = 3", 1, 3, 0); /* m: 20 -> 0,24 */
 	reached0[20] = 1;
 	trans[0][20]	= settr(0,0,0,0,0,"out_msg.receiver = receiver",0,0,0);
 	trans[0][21]	= settr(0,0,0,0,0,"out_msg.msg1 = in_msg.msg2",0,0,0);
 	trans[0][22]	= settr(0,0,0,0,0,"out_msg.msg2 = 3",0,0,0);
 	trans[0][23]	= settr(0,0,0,0,0,"out_msg.key = key",0,0,0);
-	trans[0][24]	= settr(23,0,33,33,33,"ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
+	trans[0][24]	= settr(23,0,33,35,35,"ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
 	T = trans[ 0][33] = settr(32,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(32,2,31,0,0,"ATOMIC", 1, 2, 0);
 	T = trans[0][31] = settr(30,2,0,0,0,"IF", 1, 2, 0);
 	T = T->nxt	= settr(30,2,26,0,0,"IF", 1, 2, 0);
 	    T->nxt	= settr(30,2,29,0,0,"IF", 1, 2, 0);
-	trans[0][26]	= settr(25,4,34,34,34,"((out_msg.msg1==4))", 1, 2, 0); /* m: 27 -> 34,0 */
+	trans[0][26]	= settr(25,4,34,36,36,"((out_msg.msg1==4))", 1, 2, 0); /* m: 27 -> 34,0 */
 	reached0[27] = 1;
 	trans[0][27]	= settr(0,0,0,0,0,"AliceSuccess = 1",0,0,0);
 	trans[0][28]	= settr(0,0,0,0,0,"printf('Alice Send Nb\\n')",0,0,0);
-	trans[0][32]	= settr(31,0,34,35,35,".(goto)", 1, 2, 0);
+	trans[0][32]	= settr(31,0,34,37,37,".(goto)", 1, 2, 0);
 	trans[0][29]	= settr(28,2,30,2,0,"else", 1, 2, 0);
-	trans[0][30]	= settr(29,4,34,36,36,"printf('Alice Failed to Send Nb\\n')", 1, 2, 0); /* m: 32 -> 0,34 */
+	trans[0][30]	= settr(29,4,34,38,38,"printf('Alice Failed to Send Nb\\n')", 1, 2, 0); /* m: 32 -> 0,34 */
 	reached0[32] = 1;
-	trans[0][34]	= settr(33,0,0,37,37,"-end-", 0, 3500, 0);
+	trans[0][34]	= settr(33,0,0,39,39,"-end-", 0, 3500, 0);
 	/* np_ demon: */
 	trans[_NP_] = (Trans **) emalloc(3*sizeof(Trans *));
 	T = trans[_NP_][0] = settr(9997,0,1,_T5,0,"(np_)", 1,2,0);

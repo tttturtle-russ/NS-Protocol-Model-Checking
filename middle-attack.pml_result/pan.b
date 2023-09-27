@@ -2,41 +2,43 @@
 	default: Uerror("bad return move");
 	case  0: goto R999; /* nothing to undo */
 
-		 /* PROC :init: */
-
-	case 3: // STATE 1
+		 /* CLAIM terminate */
+;
 		;
 		;
-		delproc(0, now._nr_pr-1);
 		;
-		goto R999;
-
-	case 4: // STATE 2
-		;
-		;
-		delproc(0, now._nr_pr-1);
-		;
-		goto R999;
-
-	case 5: // STATE 3
-		;
-		;
-		delproc(0, now._nr_pr-1);
-		;
-		goto R999;
-
-	case 6: // STATE 4
+		
+	case 5: // STATE 13
 		;
 		p_restor(II);
 		;
 		;
 		goto R999;
 
-		 /* PROC monitor */
-;
+		 /* PROC :init: */
+
+	case 6: // STATE 1
 		;
-		
-	case 8: // STATE 2
+		;
+		delproc(0, now._nr_pr-1);
+		;
+		goto R999;
+
+	case 7: // STATE 2
+		;
+		;
+		delproc(0, now._nr_pr-1);
+		;
+		goto R999;
+
+	case 8: // STATE 3
+		;
+		;
+		delproc(0, now._nr_pr-1);
+		;
+		goto R999;
+
+	case 9: // STATE 4
 		;
 		p_restor(II);
 		;
@@ -45,7 +47,7 @@
 
 		 /* PROC Attack */
 
-	case 9: // STATE 6
+	case 10: // STATE 6
 		;
 		((P2 *)_this)->out_msg.key = trpt->bup.ovals[9];
 		((P2 *)_this)->out_msg.msg2 = trpt->bup.ovals[8];
@@ -70,13 +72,13 @@
 		ungrab_ints(trpt->bup.ovals, 10);
 		goto R999;
 
-	case 10: // STATE 8
+	case 11: // STATE 8
 		;
 		_m = unsend(now.ch);
 		;
 		goto R999;
 
-	case 11: // STATE 15
+	case 12: // STATE 15
 		;
 		((P2 *)_this)->out_msg.key = trpt->bup.ovals[9];
 		((P2 *)_this)->out_msg.msg2 = trpt->bup.ovals[8];
@@ -101,13 +103,13 @@
 		ungrab_ints(trpt->bup.ovals, 10);
 		goto R999;
 
-	case 12: // STATE 16
+	case 13: // STATE 16
 		;
 		_m = unsend(now.ch);
 		;
 		goto R999;
 
-	case 13: // STATE 23
+	case 14: // STATE 23
 		;
 		((P2 *)_this)->out_msg.key = trpt->bup.ovals[10];
 		((P2 *)_this)->out_msg.msg2 = trpt->bup.ovals[9];
@@ -133,13 +135,13 @@
 		ungrab_ints(trpt->bup.ovals, 11);
 		goto R999;
 
-	case 14: // STATE 24
+	case 15: // STATE 24
 		;
 		_m = unsend(now.ch);
 		;
 		goto R999;
 
-	case 15: // STATE 26
+	case 16: // STATE 26
 		;
 		p_restor(II);
 		;
@@ -148,7 +150,7 @@
 
 		 /* PROC Bob */
 
-	case 16: // STATE 1
+	case 17: // STATE 1
 		;
 	/* 0 */	((P1 *)_this)->verified = trpt->bup.ovals[6];
 		XX = 1;
@@ -169,8 +171,12 @@
 		;
 		ungrab_ints(trpt->bup.ovals, 7);
 		goto R999;
+;
+		
+	case 18: // STATE 3
+		goto R999;
 
-	case 17: // STATE 13
+	case 19: // STATE 19
 		;
 		((P1 *)_this)->out_msg.key = trpt->bup.ovals[4];
 		((P1 *)_this)->out_msg.msg2 = trpt->bup.ovals[3];
@@ -181,7 +187,7 @@
 		ungrab_ints(trpt->bup.ovals, 5);
 		goto R999;
 
-	case 18: // STATE 13
+	case 20: // STATE 19
 		;
 		((P1 *)_this)->out_msg.key = trpt->bup.ovals[4];
 		((P1 *)_this)->out_msg.msg2 = trpt->bup.ovals[3];
@@ -192,7 +198,7 @@
 		ungrab_ints(trpt->bup.ovals, 5);
 		goto R999;
 
-	case 19: // STATE 13
+	case 21: // STATE 19
 		;
 		((P1 *)_this)->out_msg.key = trpt->bup.ovals[4];
 		((P1 *)_this)->out_msg.msg2 = trpt->bup.ovals[3];
@@ -203,13 +209,13 @@
 		ungrab_ints(trpt->bup.ovals, 5);
 		goto R999;
 
-	case 20: // STATE 14
+	case 22: // STATE 20
 		;
 		_m = unsend(now.ch);
 		;
 		goto R999;
 
-	case 21: // STATE 16
+	case 23: // STATE 22
 		;
 	/* 0 */	((P1 *)_this)->verified = trpt->bup.ovals[6];
 		XX = 1;
@@ -231,23 +237,21 @@
 		ungrab_ints(trpt->bup.ovals, 7);
 		goto R999;
 
-	case 22: // STATE 20
+	case 24: // STATE 25
 		;
-		now.End = trpt->bup.ovals[1];
-		now.BobSuccess = trpt->bup.ovals[0];
+		now.BobSuccess = trpt->bup.oval;
 		;
-		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
 ;
 		
-	case 23: // STATE 24
+	case 25: // STATE 29
 		goto R999;
 ;
 		
-	case 24: // STATE 22
+	case 26: // STATE 27
 		goto R999;
 
-	case 25: // STATE 26
+	case 27: // STATE 31
 		;
 		p_restor(II);
 		;
@@ -256,7 +260,7 @@
 
 		 /* PROC Alice */
 
-	case 26: // STATE 5
+	case 28: // STATE 5
 		;
 		((P0 *)_this)->out_msg.receiver = trpt->bup.ovals[4];
 		((P0 *)_this)->receiver = trpt->bup.ovals[3];
@@ -267,37 +271,37 @@
 		ungrab_ints(trpt->bup.ovals, 5);
 		goto R999;
 
-	case 27: // STATE 14
-		;
-		((P0 *)_this)->out_msg.key = trpt->bup.ovals[2];
-		((P0 *)_this)->verified = trpt->bup.ovals[1];
-		((P0 *)_this)->key = trpt->bup.ovals[0];
-		;
-		ungrab_ints(trpt->bup.ovals, 4);
-		goto R999;
-
-	case 28: // STATE 14
-		;
-		((P0 *)_this)->out_msg.key = trpt->bup.ovals[2];
-		((P0 *)_this)->verified = trpt->bup.ovals[1];
-		((P0 *)_this)->key = trpt->bup.ovals[0];
-		;
-		ungrab_ints(trpt->bup.ovals, 4);
-		goto R999;
-
 	case 29: // STATE 14
+		;
+		((P0 *)_this)->out_msg.key = trpt->bup.ovals[2];
+		((P0 *)_this)->verified = trpt->bup.ovals[1];
+		((P0 *)_this)->key = trpt->bup.ovals[0];
+		;
+		ungrab_ints(trpt->bup.ovals, 4);
+		goto R999;
+
+	case 30: // STATE 14
+		;
+		((P0 *)_this)->out_msg.key = trpt->bup.ovals[2];
+		((P0 *)_this)->verified = trpt->bup.ovals[1];
+		((P0 *)_this)->key = trpt->bup.ovals[0];
+		;
+		ungrab_ints(trpt->bup.ovals, 4);
+		goto R999;
+
+	case 31: // STATE 14
 		;
 		((P0 *)_this)->out_msg.key = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 30: // STATE 15
+	case 32: // STATE 15
 		;
 		_m = unsend(now.ch);
 		;
 		goto R999;
 
-	case 31: // STATE 17
+	case 33: // STATE 17
 		;
 	/* 0 */	((P0 *)_this)->verified = trpt->bup.ovals[6];
 		XX = 1;
@@ -319,7 +323,7 @@
 		ungrab_ints(trpt->bup.ovals, 7);
 		goto R999;
 
-	case 32: // STATE 23
+	case 34: // STATE 23
 		;
 		((P0 *)_this)->out_msg.key = trpt->bup.ovals[4];
 		((P0 *)_this)->out_msg.msg2 = trpt->bup.ovals[3];
@@ -330,27 +334,27 @@
 		ungrab_ints(trpt->bup.ovals, 5);
 		goto R999;
 
-	case 33: // STATE 24
+	case 35: // STATE 24
 		;
 		_m = unsend(now.ch);
 		;
 		goto R999;
 
-	case 34: // STATE 27
+	case 36: // STATE 27
 		;
 		now.AliceSuccess = trpt->bup.oval;
 		;
 		goto R999;
 ;
 		
-	case 35: // STATE 32
+	case 37: // STATE 32
 		goto R999;
 ;
 		
-	case 36: // STATE 30
+	case 38: // STATE 30
 		goto R999;
 
-	case 37: // STATE 34
+	case 39: // STATE 34
 		;
 		p_restor(II);
 		;

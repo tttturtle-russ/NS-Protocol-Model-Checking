@@ -102,6 +102,7 @@
 #ifndef NFAIR
 	#define NFAIR	2	/* must be >= 2 */
 #endif
+#define HAS_LTL	1
 #define HAS_CODE	1
 #if defined(RANDSTORE) && !defined(RANDSTOR)
 	#define RANDSTOR	RANDSTORE
@@ -125,6 +126,12 @@
 #if defined(NOCLAIM) && defined(NP)
 	#undef NOCLAIM
 #endif
+#ifndef NOCLAIM
+	#define NCLAIMS	1
+	#ifndef NP
+		#define VERI	4
+	#endif
+#endif
 
 typedef struct S_F_MAP {
 	char *fnm;
@@ -132,25 +139,25 @@ typedef struct S_F_MAP {
 	int upto;
 } S_F_MAP;
 
-#define _nstates4	5	/* :init: */
-#define minseq4	88
-#define maxseq4	91
-#define _endstate4	4
+#define _nstates4	14	/* terminate */
+#define minseq4	95
+#define maxseq4	107
+#define _endstate4	13
 
-#define _nstates3	3	/* monitor */
-#define minseq3	86
-#define maxseq3	87
-#define _endstate3	2
+#define _nstates3	5	/* :init: */
+#define minseq3	91
+#define maxseq3	94
+#define _endstate3	4
 
 #define _nstates2	27	/* Attack */
-#define minseq2	60
-#define maxseq2	85
+#define minseq2	65
+#define maxseq2	90
 #define _endstate2	26
 
-#define _nstates1	27	/* Bob */
+#define _nstates1	32	/* Bob */
 #define minseq1	34
-#define maxseq1	59
-#define _endstate1	26
+#define maxseq1	64
+#define _endstate1	31
 
 #define _nstates0	35	/* Alice */
 #define minseq0	0
@@ -169,8 +176,8 @@ extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
 #define T_ID	unsigned char
-#define _T5	38
-#define _T2	39
+#define _T5	40
+#define _T2	41
 #define WS		8 /* word size in bytes */
 #define SYNC	1
 #define ASYNC	0
@@ -192,8 +199,7 @@ struct Message { /* user defined type */
 	uchar msg2;
 	uchar key;
 };
-#define Pinit	((P4 *)_this)
-typedef struct P4 { /* :init: */
+typedef struct P4 { /* terminate */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 7; /* state    */
@@ -203,8 +209,8 @@ typedef struct P4 { /* :init: */
 } P4;
 #define Air4	(sizeof(P4) - 3)
 
-#define Pmonitor	((P3 *)_this)
-typedef struct P3 { /* monitor */
+#define Pinit	((P3 *)_this)
+typedef struct P3 { /* :init: */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 4; /* proctype */
 	unsigned _p   : 7; /* state    */
@@ -463,7 +469,6 @@ typedef struct State {
 #endif
 	unsigned AliceSuccess : 1;
 	unsigned BobSuccess : 1;
-	unsigned End : 1;
 	uchar ch;
 #ifdef TRIX
 	/* room for 512 proc+chan ptrs, + safety margin */
@@ -494,7 +499,7 @@ typedef struct TRIX_v6 {
 #define _endstate5	2 /* np_ */
 
 #define _start5	0 /* np_ */
-#define _start4	1
+#define _start4	5
 #define _start3	1
 #define _start2	7
 #define _start1	2
@@ -502,7 +507,7 @@ typedef struct TRIX_v6 {
 #ifdef NP
 	#define ACCEPT_LAB	1 /* at least 1 in np_ */
 #else
-	#define ACCEPT_LAB	0 /* user-defined accept labels */
+	#define ACCEPT_LAB	1 /* user-defined accept labels */
 #endif
 #ifdef MEMCNT
 	#ifdef MEMLIM
@@ -871,8 +876,8 @@ void qsend(int, int, int, int, int, int, int, int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	40
-unsigned char Is_Recv[92];
+#define NTRANS	42
+unsigned char Is_Recv[108];
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);

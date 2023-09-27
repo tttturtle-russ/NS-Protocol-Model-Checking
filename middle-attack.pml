@@ -16,7 +16,7 @@ typedef Message {
 
 bool AliceSuccess = false;
 bool BobSuccess = false;
-bool End = false;
+
 // 通信信道，ID表示通信者身份，VERIFY表示验证者身份，Message表示消息内容
 chan ch = [0] of {mtype:ID,mtype:VERIFY, Message}
 
@@ -83,6 +83,10 @@ proctype Bob () {
             printf("Wrong Public Key\n");
         ::else -> skip;
         fi;
+        if 
+        :: in_msg.msg1 == NA -> printf("Bob receive NA\n");
+        :: else -> skip;
+        fi;
         out_msg.receiver = A;
         out_msg.sender = B;
         out_msg.msg1 = in_msg.msg1;
@@ -97,7 +101,6 @@ proctype Bob () {
         :: in_msg.msg1 == NB -> 
             printf("Bob Auth Success\n");
             BobSuccess = true;
-            End = true;
         :: else -> printf("Bob Auth Failed\n");
         fi;
     }
@@ -140,8 +143,8 @@ proctype Attack () {
     }
 }
 
-active proctype monitor () {
-    assert(!End && !AliceSuccess && !BobSuccess);
+ltl terminate {
+    [] <> (AliceSuccess&&BobSuccess);
 }
 
 init {
