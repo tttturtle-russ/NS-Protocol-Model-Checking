@@ -16,7 +16,7 @@ typedef Message {
 
 bool AliceSuccess = false;
 bool BobSuccess = false;
-
+bool End = false;
 // 通信信道，ID表示通信者身份，VERIFY表示验证者身份，Message表示消息内容
 chan ch = [0] of {mtype:ID,mtype:VERIFY, Message}
 
@@ -31,10 +31,10 @@ proctype Alice () {
         out_msg.msg1 = na; 
         out_msg.msg2 = ANY;
         // 随机选择发送者,代表可能给Bob发消息也可能给C发消息
-        if 
-        ::receiver = B;
-        ::receiver = C;
-        fi;
+//       if 
+//        ::receiver = B;
+        receiver = C;
+//        fi;
         out_msg.receiver = receiver;
         // 根据发送者选择对应的公钥
         if 
@@ -60,19 +60,13 @@ proctype Alice () {
         ch ! receiver,VA,out_msg;
     }
     atomic {
-        ch ? A,verified,in_msg;
         if 
-        :: in_msg.msg1 == TestA -> 
-        atomic {
+        :: out_msg.msg1 == NB ->  
             AliceSuccess = true;
-            printf("Alice receive message TestA\n");
-        }
-        :: else ->
-        atomic {
-            printf("Alice receive wrong message\n");   
-        }
-        fi;
-    }
+            printf("Alice Send Nb\n");
+        :: else -> printf("Alice Failed to Send Nb\n");
+        fi; 
+   }
 }
 
 proctype Bob () {
@@ -89,35 +83,24 @@ proctype Bob () {
             printf("Wrong Public Key\n");
         ::else -> skip;
         fi;
-        out_msg.receiver = in_msg.sender;
+        out_msg.receiver = A;
         out_msg.sender = B;
         out_msg.msg1 = in_msg.msg1;
         out_msg.msg2 = nb;
-        if 
-        :: out_msg.receiver == A -> 
-            out_msg.key = KPA;
-            receiver = A;
-        :: out_msg.receiver == C -> 
-            out_msg.key = KPC;
-            receiver = C;
-        fi;
-        // 发送消息给Alice或者C
-        ch ! receiver,VB,out_msg;
-    }
-    atomic {
-        ch ? B,verified,in_msg;
-        out_msg.sender = B;
-        out_msg.receiver = in_msg.sender;
-        out_msg.msg1 = TestB;
-        out_msg.msg2 = ANY;
-        out_msg.key = KPA;
+        out_msg.key = KPA; 
+        // 发送消息给C(伪装成Alice)
         ch ! A,VB,out_msg;
     }
     atomic {
-        printf("Bob Send Message TestB\n");
-        BobSuccess = true;
+        ch ? B,verified,in_msg;
+        if 
+        :: in_msg.msg1 == NB -> 
+            printf("Bob Auth Success\n");
+            BobSuccess = true;
+            End = true;
+        :: else -> printf("Bob Auth Failed\n");
+        fi;
     }
-    
 }
 
 proctype Attack () {
@@ -125,7 +108,8 @@ proctype Attack () {
     mtype:VERIFY verified;
     atomic {
         // 模拟Alice->C的消息
-        ch ? C,verified,in_msg;
+//        ch ? C,verified,in_msg;
+        ch ? C,VA,in_msg;
         out_msg.receiver = B;
         out_msg.sender = in_msg.sender; 
         out_msg.msg1 = in_msg.msg1;
@@ -133,7 +117,8 @@ proctype Attack () {
         out_msg.key = KPB;
     }
     atomic {
-        ch ! B,verified,out_msg;
+//        ch ! B,verified,out_msg;
+        ch ! B,VA,out_msg;
     }
     atomic {
         ch ? A,VB,in_msg;
@@ -153,23 +138,10 @@ proctype Attack () {
         out_msg.key = KPB;
         ch ! B,verified,out_msg;
     }
-    atomic {
-        ch ? A,VB,in_msg;
-        out_msg.sender = in_msg.sender
-        out_msg.receiver = in_msg.receiver;
-        if 
-        :: in_msg.msg1 == TestB -> out_msg.msg1 = TestA;
-        :: else -> out_msg.msg1 = ANY;
-        fi;
-        out_msg.msg2 = ANY;
-        out_msg.key = in_msg.key;
-        ch ! A,VC,out_msg;
-    }
-    
 }
 
 active proctype monitor () {
-    assert(!(BobSuccess && AliceSuccess));
+    assert(!End && !AliceSuccess && !BobSuccess);
 }
 
 init {

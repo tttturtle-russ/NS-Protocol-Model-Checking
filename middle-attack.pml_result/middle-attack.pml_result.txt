@@ -1,0 +1,33 @@
+pan:1: assertion violated (( !(End)&& !(AliceSuccess))&& !(BobSuccess)) (at depth 26)
+pan: wrote middle-attack.pml1.trail
+pan: wrote middle-attack.pml2.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+
+Bit statespace search for:
+	never claim         	- (not selected)
+	assertion violations	+
+	cycle checks       	- (disabled by -DSAFETY)
+	invalid end states	- (disabled by -E flag)
+
+State-vector 96 byte, depth reached 28, errors: 2
+       28 states, stored
+        7 states, matched
+       35 transitions (= stored+matched)
+       18 atomic steps
+
+hash factor: 4.79349e+06 (best if > 100.)
+
+bits set per state: 3 (-k3)
+
+Stats on memory usage (in Megabytes):
+    0.003	equivalent memory usage for states (stored*(State-vector + overhead))
+   16.000	memory used for hash array (-w27)
+    0.305	memory used for bit stack
+    2.136	memory used for DFS stack (-m40000)
+   18.918	total actual memory usage
+
+
+
+pan: elapsed time 0 seconds

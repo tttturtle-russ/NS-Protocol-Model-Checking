@@ -1,0 +1,11 @@
+                  Bob Auth Success
+              Alice Send Nb
+spin: ../middle-attack.pml:144, Error: assertion violated
+spin: text of failed assertion: assert(((!(End)&&!(AliceSuccess))&&!(BobSuccess)))
+spin: trail ends after 27 steps
+#processes: 1
+		AliceSuccess = 1
+		BobSuccess = 1
+		End = 1
+ 27:	proc  0 (monitor:1) ../middle-attack.pml:145 (state 2) <valid end state>
+5 processes created
