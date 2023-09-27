@@ -3,15 +3,15 @@
 mtype:ID = {A, B, C};
 mtype:KEY = {KEY_A, KEY_B, KEY_C};
 mtype:DATA = {NA, NB, ANY};
-
+mtype:VERIFY = {VA, VB, VC};
 typedef Message {
     mtype:ID sender,receiver;
-    mtype:DATA msg;
+    mtype:DATA msg1,msg2;
     mtype:KEY key;
 }
 
 
-chan ch = [0] of {mtype:ID, Message}
+chan ch = [0] of {mtype:ID,mtype:VERIFY, Message}
 
 proctype Alice () {
     mtype:DATA na = NA;
@@ -19,11 +19,13 @@ proctype Alice () {
     mtype:KEY kpb = KPB;
     mtype:KEY kpc = KPC;
     mtype:ID receiver;
+    mtype:VERIFY verified;
     Message out_msg,in_msg;
     out_msg.sender = A;
-    out_msg.msg = na; 
+    out_msg.msg1 = na; 
+    out_msg.msg2 = ANY;
     atomic {
-        // 随机选择发送者
+        // 随机选择发送者,代表可能给Bob发消息也可能给C发消息
         if 
         ::receiver = B;
         ::receiver = C;
@@ -31,13 +33,17 @@ proctype Alice () {
         out_msg.receiver = receiver;
         // 根据发送者选择对应的公钥
         if 
-        ::out_msg.receiver == B -> out_msg.key = KEY_B;
-        ::out_msg.receiver == C -> out_msg.key = KEY_C;
+        ::out_msg.receiver == B -> 
+            out_msg.key = KPB;
+            verified = VB;
+        ::out_msg.receiver == C -> 
+            out_msg.key = KPC;
+            verified = VC;
         fi;
-        ch ! receiver, out_msg; 
+        ch ! receiver, VA,ut_msg; 
     }
     atomic {
-        ch ? A, in_msg;
+        ch ? A, verified,in_msg;
     }
 }
 
@@ -46,20 +52,45 @@ proctype Bob () {
     mtype:KEY kpa = KPA;
     mtype:KEY kpb = KPB;
     mtype:KEY kpc = KPC;
+    mtype:VERIFY verified;
     Message out_msg,in_msg;
-    ch ? B,in_msg; 
+    ch ? B,VA,in_msg; 
     atomic {
         if 
-        ::in_msg.receiver != B -> 
-            printf("Wrong receiver in B\n");
+        ::in_msg.key != KPB -> 
+            printf("Wrong Public Key\n");
         ::else -> skip;
         fi;
+        out_msg.receiver = in_msg.sender;
+        out_msg.sender = B;
+        out_msg.msg1 = in_msg.msg1;
+        out_msg.msg2 = nb;
+        if 
+        :: out_msg.receiver == A -> out_msg.key = kpa;
+        :: out_msg.receiver == C -> out_msg.key = kpc;
+        fi;
+        ch ! out_msg.receiver,VB,out_msg;
     }
 }
 
 proctype Attack () {
     Message out_msg,in_msg;
-    ch ? C,in_msg;
+    mtype:VERIFY verified;
+    atomic {
+        ch ? C,verified,in_msg;
+        out_msg.receiver = B;
+        out_msg.sender = in_msg.sender; 
+        out_msg.msg1 = in_msg.msg1;
+        out_msg.msg2 = in_msg.msg2;
+        out_msg.key = KPB;
+    }
+    atomic {
+        ch ! B,VA,out_msg;
+    }
+    atomic {
+        ch ? A,VB,in_msg;
+         
+    }
 }
 
 init {
