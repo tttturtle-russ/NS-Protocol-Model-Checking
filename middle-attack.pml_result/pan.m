@@ -99,32 +99,32 @@
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC :init: */
-	case 6: // STATE 1 - ../middle-attack.pml:149 - [(run Alice())] (0:0:0 - 1)
+	case 6: // STATE 1 - ../middle-attack.pml:147 - [(run Alice())] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][1] = 1;
 		if (!(addproc(II, 1, 0)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 7: // STATE 2 - ../middle-attack.pml:150 - [(run Bob())] (0:0:0 - 1)
+	case 7: // STATE 2 - ../middle-attack.pml:148 - [(run Bob())] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][2] = 1;
 		if (!(addproc(II, 1, 1)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 8: // STATE 3 - ../middle-attack.pml:151 - [(run Attack())] (0:0:0 - 1)
+	case 8: // STATE 3 - ../middle-attack.pml:149 - [(run Attack())] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][3] = 1;
 		if (!(addproc(II, 1, 2)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 9: // STATE 4 - ../middle-attack.pml:152 - [-end-] (0:0:0 - 1)
+	case 9: // STATE 4 - ../middle-attack.pml:150 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][4] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC Attack */
-	case 10: // STATE 1 - ../middle-attack.pml:115 - [ch?1,3,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (9:0:10 - 1)
+	case 10: // STATE 1 - ../middle-attack.pml:113 - [ch?1,3,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (9:0:10 - 1)
 		reached[2][1] = 1;
 		if (boq != now.ch) continue;
 		if (q_len(now.ch) == 0) continue;
@@ -240,7 +240,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 5 */
-	case 11: // STATE 8 - ../middle-attack.pml:124 - [ch!2,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
+	case 11: // STATE 8 - ../middle-attack.pml:122 - [ch!2,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][8] = 1;
 		if (q_len(now.ch))
@@ -261,7 +261,7 @@
 		qsend(now.ch, 0, 2, 3, ((P2 *)_this)->out_msg.sender, ((P2 *)_this)->out_msg.receiver, ((P2 *)_this)->out_msg.msg1, ((P2 *)_this)->out_msg.msg2, ((P2 *)_this)->out_msg.key, 7);
 		{ boq = now.ch; };
 		_m = 2; goto P999; /* 0 */
-	case 12: // STATE 10 - ../middle-attack.pml:127 - [ch?3,2,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (16:0:10 - 1)
+	case 12: // STATE 10 - ../middle-attack.pml:125 - [ch?3,2,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (16:0:10 - 1)
 		reached[2][10] = 1;
 		if (boq != now.ch) continue;
 		if (q_len(now.ch) == 0) continue;
@@ -377,7 +377,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 5 */
-	case 13: // STATE 16 - ../middle-attack.pml:133 - [ch!3,1,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
+	case 13: // STATE 16 - ../middle-attack.pml:131 - [ch!3,1,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][16] = 1;
 		if (q_len(now.ch))
@@ -398,7 +398,7 @@
 		qsend(now.ch, 0, 3, 1, ((P2 *)_this)->out_msg.sender, ((P2 *)_this)->out_msg.receiver, ((P2 *)_this)->out_msg.msg1, ((P2 *)_this)->out_msg.msg2, ((P2 *)_this)->out_msg.key, 7);
 		{ boq = now.ch; };
 		_m = 2; goto P999; /* 0 */
-	case 14: // STATE 18 - ../middle-attack.pml:136 - [ch?1,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (24:0:11 - 1)
+	case 14: // STATE 18 - ../middle-attack.pml:134 - [ch?1,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (24:0:11 - 1)
 		reached[2][18] = 1;
 		if (boq != now.ch) continue;
 		if (q_len(now.ch) == 0) continue;
@@ -519,7 +519,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 5 */
-	case 15: // STATE 24 - ../middle-attack.pml:142 - [ch!2,verified,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
+	case 15: // STATE 24 - ../middle-attack.pml:140 - [ch!2,verified,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][24] = 1;
 		if (q_len(now.ch))
@@ -540,14 +540,14 @@
 		qsend(now.ch, 0, 2, ((P2 *)_this)->verified, ((P2 *)_this)->out_msg.sender, ((P2 *)_this)->out_msg.receiver, ((P2 *)_this)->out_msg.msg1, ((P2 *)_this)->out_msg.msg2, ((P2 *)_this)->out_msg.key, 7);
 		{ boq = now.ch; };
 		_m = 2; goto P999; /* 0 */
-	case 16: // STATE 26 - ../middle-attack.pml:144 - [-end-] (0:0:0 - 1)
+	case 16: // STATE 26 - ../middle-attack.pml:142 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][26] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC Bob */
-	case 17: // STATE 1 - ../middle-attack.pml:78 - [ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (0:0:7 - 1)
+	case 17: // STATE 1 - ../middle-attack.pml:76 - [ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (0:0:7 - 1)
 		reached[1][1] = 1;
 		if (boq != now.ch) continue;
 		if (q_len(now.ch) == 0) continue;
@@ -634,7 +634,7 @@
 #endif
 			((P1 *)_this)->verified = 0;
 		_m = 4; goto P999; /* 0 */
-	case 18: // STATE 3 - ../middle-attack.pml:82 - [((in_msg.key!=2))] (13:0:0 - 1)
+	case 18: // STATE 3 - ../middle-attack.pml:80 - [((in_msg.key!=2))] (13:0:0 - 1)
 		IfNotBlocked
 		reached[1][3] = 1;
 		if (!((((P1 *)_this)->in_msg.key!=2)))
@@ -646,7 +646,7 @@
 		reached[1][8] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 19: // STATE 9 - ../middle-attack.pml:87 - [((in_msg.msg1==5))] (20:0:5 - 1)
+	case 19: // STATE 9 - ../middle-attack.pml:85 - [((in_msg.msg1==5))] (20:0:5 - 1)
 		IfNotBlocked
 		reached[1][9] = 1;
 		if (!((((P1 *)_this)->in_msg.msg1==5)))
@@ -699,7 +699,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 7 */
-	case 20: // STATE 12 - ../middle-attack.pml:88 - [(1)] (20:0:5 - 1)
+	case 20: // STATE 12 - ../middle-attack.pml:86 - [(1)] (20:0:5 - 1)
 		IfNotBlocked
 		reached[1][12] = 1;
 		if (!(1))
@@ -749,7 +749,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 6 */
-	case 21: // STATE 15 - ../middle-attack.pml:90 - [out_msg.receiver = 3] (0:20:5 - 3)
+	case 21: // STATE 15 - ../middle-attack.pml:88 - [out_msg.receiver = 3] (0:20:5 - 3)
 		IfNotBlocked
 		reached[1][15] = 1;
 		(trpt+1)->bup.ovals = grab_ints(5);
@@ -792,7 +792,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 4 */
-	case 22: // STATE 20 - ../middle-attack.pml:96 - [ch!3,2,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
+	case 22: // STATE 20 - ../middle-attack.pml:94 - [ch!3,2,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
 		IfNotBlocked
 		reached[1][20] = 1;
 		if (q_len(now.ch))
@@ -813,7 +813,7 @@
 		qsend(now.ch, 0, 3, 2, ((P1 *)_this)->out_msg.sender, ((P1 *)_this)->out_msg.receiver, ((P1 *)_this)->out_msg.msg1, ((P1 *)_this)->out_msg.msg2, ((P1 *)_this)->out_msg.key, 7);
 		{ boq = now.ch; };
 		_m = 2; goto P999; /* 0 */
-	case 23: // STATE 22 - ../middle-attack.pml:99 - [ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (0:0:7 - 1)
+	case 23: // STATE 22 - ../middle-attack.pml:97 - [ch?2,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (0:0:7 - 1)
 		reached[1][22] = 1;
 		if (boq != now.ch) continue;
 		if (q_len(now.ch) == 0) continue;
@@ -900,7 +900,7 @@
 #endif
 			((P1 *)_this)->verified = 0;
 		_m = 4; goto P999; /* 0 */
-	case 24: // STATE 23 - ../middle-attack.pml:101 - [((in_msg.msg1==4))] (31:0:1 - 1)
+	case 24: // STATE 23 - ../middle-attack.pml:99 - [((in_msg.msg1==4))] (31:0:1 - 1)
 		IfNotBlocked
 		reached[1][23] = 1;
 		if (!((((P1 *)_this)->in_msg.msg1==4)))
@@ -920,12 +920,12 @@
 		reached[1][29] = 1;
 		;
 		_m = 3; goto P999; /* 3 */
-	case 25: // STATE 29 - ../middle-attack.pml:106 - [.(goto)] (0:31:0 - 2)
+	case 25: // STATE 29 - ../middle-attack.pml:104 - [.(goto)] (0:31:0 - 2)
 		IfNotBlocked
 		reached[1][29] = 1;
 		;
 		_m = 3; goto P999; /* 0 */
-	case 26: // STATE 27 - ../middle-attack.pml:104 - [printf('Bob Auth Failed\\n')] (0:31:0 - 1)
+	case 26: // STATE 27 - ../middle-attack.pml:102 - [printf('Bob Auth Failed\\n')] (0:31:0 - 1)
 		IfNotBlocked
 		reached[1][27] = 1;
 		Printf("Bob Auth Failed\n");
@@ -933,7 +933,7 @@
 		reached[1][29] = 1;
 		;
 		_m = 3; goto P999; /* 1 */
-	case 27: // STATE 31 - ../middle-attack.pml:107 - [-end-] (0:0:0 - 1)
+	case 27: // STATE 31 - ../middle-attack.pml:105 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[1][31] = 1;
 		if (!delproc(1, II)) continue;
@@ -983,53 +983,13 @@
 #endif
 		;
 		_m = 3; goto P999; /* 4 */
-	case 29: // STATE 6 - ../middle-attack.pml:41 - [((out_msg.receiver==2))] (15:0:4 - 1)
+	case 29: // STATE 6 - ../middle-attack.pml:41 - [((out_msg.receiver==1))] (15:0:4 - 1)
 		IfNotBlocked
 		reached[0][6] = 1;
-		if (!((((P0 *)_this)->out_msg.receiver==2)))
-			continue;
-		/* merge: key = 2(15, 7, 15) */
-		reached[0][7] = 1;
-		(trpt+1)->bup.ovals = grab_ints(4);
-		(trpt+1)->bup.ovals[0] = ((P0 *)_this)->key;
-		((P0 *)_this)->key = 2;
-#ifdef VAR_RANGES
-		logval("Alice:key", ((P0 *)_this)->key);
-#endif
-		;
-		/* merge: verified = 2(15, 8, 15) */
-		reached[0][8] = 1;
-		(trpt+1)->bup.ovals[1] = ((P0 *)_this)->verified;
-		((P0 *)_this)->verified = 2;
-#ifdef VAR_RANGES
-		logval("Alice:verified", ((P0 *)_this)->verified);
-#endif
-		;
-		if (TstOnly) return 1; /* TT */
-		/* dead 2: verified */  
-#ifdef HAS_CODE
-		if (!readtrail)
-#endif
-			((P0 *)_this)->verified = 0;
-		/* merge: .(goto)(15, 13, 15) */
-		reached[0][13] = 1;
-		;
-		/* merge: out_msg.key = key(15, 14, 15) */
-		reached[0][14] = 1;
-		(trpt+1)->bup.ovals[2] = ((P0 *)_this)->out_msg.key;
-		((P0 *)_this)->out_msg.key = ((P0 *)_this)->key;
-#ifdef VAR_RANGES
-		logval("Alice:out_msg.key", ((P0 *)_this)->out_msg.key);
-#endif
-		;
-		_m = 3; goto P999; /* 4 */
-	case 30: // STATE 9 - ../middle-attack.pml:44 - [((out_msg.receiver==1))] (15:0:4 - 1)
-		IfNotBlocked
-		reached[0][9] = 1;
 		if (!((((P0 *)_this)->out_msg.receiver==1)))
 			continue;
-		/* merge: key = 1(15, 10, 15) */
-		reached[0][10] = 1;
+		/* merge: key = 1(15, 7, 15) */
+		reached[0][7] = 1;
 		(trpt+1)->bup.ovals = grab_ints(4);
 		(trpt+1)->bup.ovals[0] = ((P0 *)_this)->key;
 		((P0 *)_this)->key = 1;
@@ -1037,8 +997,8 @@
 		logval("Alice:key", ((P0 *)_this)->key);
 #endif
 		;
-		/* merge: verified = 1(15, 11, 15) */
-		reached[0][11] = 1;
+		/* merge: verified = 1(15, 8, 15) */
+		reached[0][8] = 1;
 		(trpt+1)->bup.ovals[1] = ((P0 *)_this)->verified;
 		((P0 *)_this)->verified = 1;
 #ifdef VAR_RANGES
@@ -1063,7 +1023,43 @@
 #endif
 		;
 		_m = 3; goto P999; /* 4 */
-	case 31: // STATE 14 - ../middle-attack.pml:48 - [out_msg.key = key] (0:15:1 - 3)
+	case 30: // STATE 10 - ../middle-attack.pml:44 - [key = 2] (0:15:4 - 1)
+		IfNotBlocked
+		reached[0][10] = 1;
+		(trpt+1)->bup.ovals = grab_ints(4);
+		(trpt+1)->bup.ovals[0] = ((P0 *)_this)->key;
+		((P0 *)_this)->key = 2;
+#ifdef VAR_RANGES
+		logval("Alice:key", ((P0 *)_this)->key);
+#endif
+		;
+		/* merge: verified = 2(15, 11, 15) */
+		reached[0][11] = 1;
+		(trpt+1)->bup.ovals[1] = ((P0 *)_this)->verified;
+		((P0 *)_this)->verified = 2;
+#ifdef VAR_RANGES
+		logval("Alice:verified", ((P0 *)_this)->verified);
+#endif
+		;
+		if (TstOnly) return 1; /* TT */
+		/* dead 2: verified */  
+#ifdef HAS_CODE
+		if (!readtrail)
+#endif
+			((P0 *)_this)->verified = 0;
+		/* merge: .(goto)(15, 13, 15) */
+		reached[0][13] = 1;
+		;
+		/* merge: out_msg.key = key(15, 14, 15) */
+		reached[0][14] = 1;
+		(trpt+1)->bup.ovals[2] = ((P0 *)_this)->out_msg.key;
+		((P0 *)_this)->out_msg.key = ((P0 *)_this)->key;
+#ifdef VAR_RANGES
+		logval("Alice:out_msg.key", ((P0 *)_this)->out_msg.key);
+#endif
+		;
+		_m = 3; goto P999; /* 3 */
+	case 31: // STATE 14 - ../middle-attack.pml:46 - [out_msg.key = key] (0:15:1 - 3)
 		IfNotBlocked
 		reached[0][14] = 1;
 		(trpt+1)->bup.oval = ((P0 *)_this)->out_msg.key;
@@ -1073,7 +1069,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 32: // STATE 15 - ../middle-attack.pml:49 - [ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
+	case 32: // STATE 15 - ../middle-attack.pml:47 - [ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][15] = 1;
 		if (q_len(now.ch))
@@ -1094,7 +1090,7 @@
 		qsend(now.ch, 0, ((P0 *)_this)->receiver, 3, ((P0 *)_this)->out_msg.sender, ((P0 *)_this)->out_msg.receiver, ((P0 *)_this)->out_msg.msg1, ((P0 *)_this)->out_msg.msg2, ((P0 *)_this)->out_msg.key, 7);
 		{ boq = now.ch; };
 		_m = 2; goto P999; /* 0 */
-	case 33: // STATE 17 - ../middle-attack.pml:52 - [ch?3,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (0:0:7 - 1)
+	case 33: // STATE 17 - ../middle-attack.pml:50 - [ch?3,verified,in_msg.sender,in_msg.receiver,in_msg.msg1,in_msg.msg2,in_msg.key] (0:0:7 - 1)
 		reached[0][17] = 1;
 		if (boq != now.ch) continue;
 		if (q_len(now.ch) == 0) continue;
@@ -1181,7 +1177,7 @@
 #endif
 			((P0 *)_this)->verified = 0;
 		_m = 4; goto P999; /* 0 */
-	case 34: // STATE 19 - ../middle-attack.pml:55 - [out_msg.sender = 3] (0:24:5 - 1)
+	case 34: // STATE 19 - ../middle-attack.pml:53 - [out_msg.sender = 3] (0:24:5 - 1)
 		IfNotBlocked
 		reached[0][19] = 1;
 		(trpt+1)->bup.ovals = grab_ints(5);
@@ -1224,7 +1220,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 4 */
-	case 35: // STATE 24 - ../middle-attack.pml:60 - [ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
+	case 35: // STATE 24 - ../middle-attack.pml:58 - [ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][24] = 1;
 		if (q_len(now.ch))
@@ -1245,7 +1241,7 @@
 		qsend(now.ch, 0, ((P0 *)_this)->receiver, 3, ((P0 *)_this)->out_msg.sender, ((P0 *)_this)->out_msg.receiver, ((P0 *)_this)->out_msg.msg1, ((P0 *)_this)->out_msg.msg2, ((P0 *)_this)->out_msg.key, 7);
 		{ boq = now.ch; };
 		_m = 2; goto P999; /* 0 */
-	case 36: // STATE 26 - ../middle-attack.pml:64 - [((out_msg.msg1==4))] (34:0:1 - 1)
+	case 36: // STATE 26 - ../middle-attack.pml:62 - [((out_msg.msg1==4))] (34:0:1 - 1)
 		IfNotBlocked
 		reached[0][26] = 1;
 		if (!((((P0 *)_this)->out_msg.msg1==4)))
@@ -1265,12 +1261,12 @@
 		reached[0][32] = 1;
 		;
 		_m = 3; goto P999; /* 3 */
-	case 37: // STATE 32 - ../middle-attack.pml:69 - [.(goto)] (0:34:0 - 2)
+	case 37: // STATE 32 - ../middle-attack.pml:67 - [.(goto)] (0:34:0 - 2)
 		IfNotBlocked
 		reached[0][32] = 1;
 		;
 		_m = 3; goto P999; /* 0 */
-	case 38: // STATE 30 - ../middle-attack.pml:67 - [printf('Alice Failed to Send Nb\\n')] (0:34:0 - 1)
+	case 38: // STATE 30 - ../middle-attack.pml:65 - [printf('Alice Failed to Send Nb\\n')] (0:34:0 - 1)
 		IfNotBlocked
 		reached[0][30] = 1;
 		Printf("Alice Failed to Send Nb\n");
@@ -1278,7 +1274,7 @@
 		reached[0][32] = 1;
 		;
 		_m = 3; goto P999; /* 1 */
-	case 39: // STATE 34 - ../middle-attack.pml:70 - [-end-] (0:0:0 - 1)
+	case 39: // STATE 34 - ../middle-attack.pml:68 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][34] = 1;
 		if (!delproc(1, II)) continue;

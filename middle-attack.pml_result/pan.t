@@ -159,16 +159,16 @@ settable(void)
 	T = trans[0][12] = settr(11,2,0,0,0,"IF", 1, 3, 0);
 	T = T->nxt	= settr(11,2,6,0,0,"IF", 1, 3, 0);
 	    T->nxt	= settr(11,2,9,0,0,"IF", 1, 3, 0);
-	trans[0][6]	= settr(5,2,15,29,29,"((out_msg.receiver==2))", 1, 3, 0); /* m: 7 -> 15,0 */
+	trans[0][6]	= settr(5,2,15,29,29,"((out_msg.receiver==1))", 1, 3, 0); /* m: 7 -> 15,0 */
 	reached0[7] = 1;
-	trans[0][7]	= settr(0,0,0,0,0,"key = 2",0,0,0);
-	trans[0][8]	= settr(0,0,0,0,0,"verified = 2",0,0,0);
+	trans[0][7]	= settr(0,0,0,0,0,"key = 1",0,0,0);
+	trans[0][8]	= settr(0,0,0,0,0,"verified = 1",0,0,0);
 	trans[0][13]	= settr(12,2,14,1,0,".(goto)", 1, 3, 0); /* m: 14 -> 0,15 */
 	reached0[14] = 1;
-	trans[0][9]	= settr(8,2,15,30,30,"((out_msg.receiver==1))", 1, 3, 0); /* m: 10 -> 15,0 */
-	reached0[10] = 1;
-	trans[0][10]	= settr(0,0,0,0,0,"key = 1",0,0,0);
-	trans[0][11]	= settr(0,0,0,0,0,"verified = 1",0,0,0);
+	trans[0][9]	= settr(8,2,10,2,0,"else", 1, 3, 0);
+	trans[0][10]	= settr(9,2,15,30,30,"key = 2", 1, 3, 0); /* m: 11 -> 0,15 */
+	reached0[11] = 1;
+	trans[0][11]	= settr(0,0,0,0,0,"verified = 2",0,0,0);
 	trans[0][14]	= settr(13,2,15,31,31,"out_msg.key = key", 1, 3, 0);
 	trans[0][15]	= settr(14,0,18,32,32,"ch!receiver,3,out_msg.sender,out_msg.receiver,out_msg.msg1,out_msg.msg2,out_msg.key", 1, 3, 0);
 	T = trans[ 0][18] = settr(17,2,0,0,0,"ATOMIC", 1, 2, 0);

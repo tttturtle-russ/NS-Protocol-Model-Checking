@@ -38,12 +38,10 @@ proctype Alice () {
         out_msg.receiver = receiver;
         // 根据发送者选择对应的公钥
         if 
-        ::out_msg.receiver == B -> 
-            key = KPB;
-            verified = VB;
         ::out_msg.receiver == C -> 
             key = KPC;
             verified = VC;
+        :: else -> key = KPB;verified = VB;
         fi;
         out_msg.key = key;
         ch ! receiver, VA,out_msg; 
