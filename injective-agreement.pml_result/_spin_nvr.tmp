@@ -1,0 +1,18 @@
+never agreement {    /* !((! ([] ((AliceSuccess) && (BobSuccess)))) || ((<> (AliceAgree)) && (BobAgree))) */
+accept_init:
+T0_init:
+	do
+	:: (! ((AliceAgree)) && ((AliceSuccess) && (BobSuccess))) -> goto accept_S6
+	:: (! ((BobAgree)) && ((AliceSuccess) && (BobSuccess))) -> goto accept_S2
+	od;
+accept_S6:
+T0_S6:
+	do
+	:: (! ((AliceAgree)) && ((AliceSuccess) && (BobSuccess))) -> goto accept_S6
+	od;
+accept_S2:
+T0_S2:
+	do
+	:: (((AliceSuccess) && (BobSuccess))) -> goto accept_S2
+	od;
+}
